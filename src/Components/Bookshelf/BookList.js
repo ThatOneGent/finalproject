@@ -1,55 +1,81 @@
 import React from 'react';
+import { Suspense } from 'react';
 import { BookShelf } from './Bookshelf';
 import { bookApi } from '../rest/BookApi';
 import { NewShelfForm } from './NewShelfForm';
+import { useState } from 'react';
+import { Switch, Route, Link, useRouteMatch} from 'react-router-dom/cjs/react-router-dom.min';
 
-
-export class BookcaseList extends React.Component {
-    state = {
+export const BookcaseList =() => {
+    const [shelves, setState] = useState('');
+  /*   state = {
         shelves: []
     };
+ */
+  /*  function componentDidMount() {
+        fetchBookShelf();
+    };
+ */
 
-    componentDidMount() {
-        this.fetchBookShelf();
+    React.useEffect(() => {
+        fetchBookShelf();
+        console.log("useEffect hit");
+    }, []) 
+
+    const fetchBookShelf = async () => {
+        const shelving = await bookApi.get();
+        setState({ shelving });
+        console.log(shelving);
+        console.log("this is shelves");
+        console.log(shelves);
     };
 
-    fetchBookShelf = async () => {
-        const shelves = await bookApi.get();
-        this.setState({ shelves });
-    };
 
-
-    updateBookcase = async (updatedShelf) => {
+    const updateBookcase = async (updatedShelf) => {
         await bookApi.put(updatedShelf);
-        this.fetchBookShelf();
+        fetchBookShelf();
     };
 
-    deleteBookcase = async (updatedShelf) => {
+    const deleteBookcase = async (updatedShelf) => {
         await bookApi.delete(updatedShelf);
-        this.fetchBookShelf();
+        fetchBookShelf();
     };
 
-    addBookcase = async (newShelf) => {
+    const addBookcase = async (newShelf) => {
         let newBookCase = { Bookcase: newShelf.shelfName, books: [] }
         await bookApi.post(newBookCase);
-        this.fetchBookShelf();
+        fetchBookShelf();
     };
 
-    lookupBooktest = async (book) => {
+    const lookupBooktest = async (book) => {
         let resp = await bookApi.OLfind(book);
-        this.fetchBookShelf();
+        fetchBookShelf();
 
         return resp;
     };
 
 
-
-    render() {
+//fetchBookShelf();
+    
         return (
             <div className="container">
                 <div className='row'>
                     <div className='col-md'>
-                        {this.state.shelves.map((bookShelf) => (
+
+                        {console.log("this is in the UL Shelves below")}
+                        {console.log(shelves)}
+                        <Suspense fallback={ <p>Data is loading</p>}>
+                        {shelves.map((bookShelf) => (
+                            <BookShelf
+                                bookShelf={bookShelf}
+                                key={bookShelf.id}
+                                updateBookcase={updateBookcase}
+                                deleteBookcase={deleteBookcase}
+                                lookupBooktest={lookupBooktest}
+                            />
+                        ))}
+                        </Suspense>
+                       {/*  {this.state.shelves.map((bookShelf) => (
                             <BookShelf
                                 bookShelf={bookShelf}
                                 key={bookShelf.id}
@@ -57,10 +83,13 @@ export class BookcaseList extends React.Component {
                                 deleteBookcase={this.deleteBookcase}
                                 lookupBooktest={this.lookupBooktest}
                             />
-                        ))}
+                        ))} */}
+
+
+
                     </div>
                     <div  className='col-md'>
-                    <NewShelfForm addBookcase={this.addBookcase} />
+                    <NewShelfForm addBookcase={addBookcase} />
                     </div>
                 </div>
             </div>
@@ -70,4 +99,5 @@ export class BookcaseList extends React.Component {
 
         )
     }
-}
+
+    export default BookcaseList;
