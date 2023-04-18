@@ -5,6 +5,7 @@ import { bookApi } from '../rest/BookApi';
 import { NewShelfForm } from './NewShelfForm';
 import { useState } from 'react';
 import { Switch, Route, Link, useRouteMatch} from 'react-router-dom/cjs/react-router-dom.min';
+import { openLibApi } from '../rest/OLApi';
 
 export const BookcaseList =() => {
     const initState = {shelves:[]};
@@ -59,8 +60,8 @@ export const BookcaseList =() => {
         fetchBookShelf();
     };
 
-    const lookupBooktest = async (book) => {
-        let resp = await bookApi.OLfind(book);
+    const lookupBookOpenLib = async (book) => {
+        let resp = await openLibApi.OLfind(book);
         fetchBookShelf();
 
         return resp;
@@ -102,7 +103,7 @@ export const BookcaseList =() => {
                                         //key={bookShelf.id}
                                         updateBookcase={updateBookcase}
                                         deleteBookcase={deleteBookcase}
-                                        lookupBooktest={lookupBooktest}
+                                        lookupBookOpenLib={lookupBookOpenLib}
                                     />
                                 )} />
                         </Switch>
