@@ -41,7 +41,9 @@ export const BookShelf = (props) => {
 
 
         <table className="bookshelf-table">
+            {console.log(bookShelf)}
             {bookShelf.books.map((book, index) => (
+
                 <tr key={index}>
                     <td>
                         <label><strong> <img src={`https://covers.openlibrary.org/b/id/${book.cover}-M.jpg`}/> Title: </strong> {`${book.title}`} &nbsp;&nbsp;&nbsp;  <strong> Author: </strong> {`${book.author}`}</label>
