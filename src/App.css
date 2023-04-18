@@ -12,3 +12,13 @@ body{
  .bookshelf-table tr{
    border-bottom: #282c34;
  }
+
+ .shelflink-div{
+
+  font-size: 1.5em;
+  font-weight: bold;
+  color: black;
+  font-style: normal;
+  
+  
+ }

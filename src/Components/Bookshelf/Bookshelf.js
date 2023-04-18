@@ -4,7 +4,7 @@ import {useHistory,Link}from 'react-router-dom'
 
 export const BookShelf = (props) => {
     const {data} = props;
-    const { bookShelf, updateBookcase, deleteBookcase, lookupBookOpenLib } = props;
+    const { bookShelf, updateBookcase, deleteBookcase, lookupBookOpenLib, lookupOpenLibInfo } = props;
     console.log(props);
     const deleteBook = (bookId) => {
         const updatedShelf = {
@@ -22,12 +22,35 @@ export const BookShelf = (props) => {
         console.log("Openlib api test");
         //console.log(lookupBooktest(book));  //always gives promise pending
         const OpenLibBook = await lookupBookOpenLib(book);
+
         //const resp = await lookupBooktest(book);
         //const TestResults = await OpenLibBook.json();
-        console.log('test book retrieve');
-        //console.log(TestResults);
+        console.log('What came back from openLib');
+        console.log(OpenLibBook);
 
-        book = { ...book, OLworks: OpenLibBook.docs[0].key, cover: [OpenLibBook.docs[0].cover_i, OpenLibBook.docs[1].cover_i, OpenLibBook.docs[2].cover_i,] };
+        if(OpenLibBook){
+
+        // block below deprecated due to inconsistent data results
+
+        /* 
+        const OpenLibBookInfo = await lookupOpenLibInfo(OpenLibBook.docs[0].key);
+        console.log("OpenLibBookInfo return results");
+        console.log(OpenLibBookInfo);
+        
+        book = { ...book, OLworks: OpenLibBook.docs[0].key, cover: OpenLibBookInfo.covers, synop: OpenLibBookInfo.description}; */
+
+        book = {...book, OLworks: OpenLibBook.docs[0].key, cover: `https://covers.openlibrary.org/b/id/${OpenLibBook.docs[0].cover_i}-M.jpg`  };
+        
+
+        } else{
+            // add place holder cover image and synopsis text into book variable
+            book = { ...book, OLworks: '', cover: '/imgs/coverdefault.jpg' };
+        }
+
+        // test to add multiple covers... will expand later
+        // book = { ...book, OLworks: OpenLibBook.docs[0].key, cover: [OpenLibBook.docs[0].cover_i, OpenLibBook.docs[1].cover_i, OpenLibBook.docs[2].cover_i,] };
+        
+       // book = { ...book, OLworks: OpenLibBook.docs[0].key, cover: OpenLibBook.docs[0].cover_i };
 
 
         return updateBookcase({ ...bookShelf, books: [...bookShelf.books, book] })
@@ -85,13 +108,36 @@ export const BookShelf = (props) => {
             {console.log("bookshelf below")}
             {console.log(bookShelf)}
             {console.log(data)}
+            <tbody>
             {bookShelf.books.map((book, index) => (
-
+                
                 <tr key={index}>
                     <td>
-                        <label><strong> <div><img src={`https://covers.openlibrary.org/b/id/${book.cover}-M.jpg`} /></div> Title: </strong> {`${book.title}`} &nbsp;&nbsp;&nbsp;  <strong> Author: </strong> {`${book.author}`}</label> 
+                        
+                    <div><img src={`${book.cover}`} 
+                    
+/*                     onError={({ currentTarget }) => {
+    currentTarget.onerror = null; // prevents looping
+    currentTarget.src="/imgs/coverdefault.jpg";
+  }} */
+  
+  
+  /></div>
+
+
+                    {/* <div><img src={`https://covers.openlibrary.org/b/id/${book.cover}-M.jpg`} onError={src='http://server/app/resources/img/avatar.jpg'}/></div> */}
+
+
+                    {/* <div>(Image from OpenLibrary)</div>  */}
+                    </td>
+                    <table><tbody><tr>
+                    <td>
+                        <label><strong> Title: </strong> {`${book.title}`} &nbsp;&nbsp;&nbsp;  <strong> Author: </strong> {`${book.author}`}</label> 
                         
                     </td>
+                    </tr>
+                    {/* <tr> <strong> Synopsis (from open Library) - </strong> TEST TEXT</tr> */}
+                    </tbody></table>
                     <td>
                         <button onClick={(e) => deleteBook(book.id)}>Delete</button>
                     </td>
@@ -100,7 +146,7 @@ export const BookShelf = (props) => {
                 </tr>
 
             ))}
-
+</tbody>
         </table>
 
     );

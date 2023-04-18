@@ -17,6 +17,7 @@ import {
 import Home from './Components/Home.js';
 import About from './Components/About.js';
 import BookcaseList from './Components/Bookshelf/BookList';
+import NavMenu from './Components/NavMenu';
 
 export default function App() {
   
@@ -26,7 +27,8 @@ export default function App() {
         <div>
           <h1>Hello World 🌎</h1>
 
-          <div className='btn-group'>
+ <NavMenu/>
+         {/*  <div className='btn-group'>
 
             <button className=' btn btn-outline-secondary'>
               <Link to="/">Home</Link>
@@ -44,10 +46,10 @@ export default function App() {
 
 
 
-          </div>
+          </div> */}
 
 
-
+{/* 
           <Switch>
             <Route path='/Bookshelf'>
               <BookcaseList/>
@@ -59,7 +61,7 @@ export default function App() {
               <Home />
             </Route>
 
-          </Switch>
+          </Switch> */}
 
 
         </div>
