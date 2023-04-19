@@ -4,40 +4,52 @@ import {
     Switch,
     Route,
     Link,
-    useRouteMatch
+    useRouteMatch,
+    NavLink
   } from 'react-router-dom';
 
 import BookcaseList from "./Bookshelf/BookList";
 import About from "./About";
 import Home from "./Home";
+import '../../node_modules/jquery/dist/jquery';
+import '../../node_modules/bootstrap/dist/css/bootstrap.css';
+import '../../node_modules/bootstrap/dist/js/bootstrap.bundle';
 
 
 export default function NavMenu() {
 
 return(
-<div className="navWrapper">
+<div className="navWrapper navbar navbar-expand-md navbar-dark bg-dark">
 
-    <div className='btn-group'>
+      <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle Navigation">
+            
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <button className=' btn btn-outline-secondary'>
-      <Link to="/">Home</Link>
+  
+
+    <div className='collapse navbar-collapse justify-content-center' id='navbarNavDropdown'>
+ <div className="navbar-nav">
+    <button className='btn btn-outline-secondary nav-item' >
+      <NavLink activeClassName="active" className='nav-link' exact to="/">Home</NavLink>
 
     </button>
-    <button className=' btn btn-outline-secondary'>
+    <button  className='btn btn-outline-secondary nav-item'>
 
-      <Link to="/Bookshelf">Bookshelf</Link>
+      <NavLink activeClassName="active" className='nav-link' to="/Bookshelf">Bookshelf</NavLink>
     </button>
 
-    <button className=' btn btn-outline-secondary'>
+    <button className='btn btn-outline-secondary nav-item'>
 
-      <Link to="/About">About</Link>
+      <NavLink  activeClassName="active" className='nav-link' to="/About">About</NavLink>
     </button>
-
+</div>
 
 
   </div>
     
-    <Switch>
+    {/* <Switch>
     <Route path='/Bookshelf'>
       <BookcaseList/>
     </Route>
@@ -48,7 +60,9 @@ return(
       <Home />
     </Route>
 
-  </Switch>
+  </Switch> */}
+  
+  
 </div>
 );
 

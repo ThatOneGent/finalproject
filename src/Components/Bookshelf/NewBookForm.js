@@ -36,7 +36,7 @@ export const NewBookForm = (props) => {
                     value={author}
                 />
 
-            <button className="btn btn-primary" type='submit'>Add book</button>
+            <button className="btn btn-success" type='submit'>Add book</button>
                     
 
             </form>

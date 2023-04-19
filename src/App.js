@@ -18,17 +18,20 @@ import Home from './Components/Home.js';
 import About from './Components/About.js';
 import BookcaseList from './Components/Bookshelf/BookList';
 import NavMenu from './Components/NavMenu';
+import Header from './Components/Header';
+import Footer from './Components/Footer';
 
 export default function App() {
-  
-  return (
-   <div className='container'>
-      <Router>
-        <div>
-          <h1>Hello World 🌎</h1>
 
- <NavMenu/>
-         {/*  <div className='btn-group'>
+  return (
+    <div className='container-fluid g-0'> {/* Sets stage for using entire top portion for header and set gutter to 0*/}
+       <Router> 
+        <Header />
+       
+        <div className='container'>  {/* Contains main body of app within container-- includes the switch component that is the route/navigation */}
+        
+         
+          {/*  <div className='btn-group'>
 
             <button className=' btn btn-outline-secondary'>
               <Link to="/">Home</Link>
@@ -49,7 +52,7 @@ export default function App() {
           </div> */}
 
 
-{/* 
+          
           <Switch>
             <Route path='/Bookshelf'>
               <BookcaseList/>
@@ -61,10 +64,11 @@ export default function App() {
               <Home />
             </Route>
 
-          </Switch> */}
+          </Switch> 
 
 
         </div>
+        <Footer/>
 
       </Router>
     </div>

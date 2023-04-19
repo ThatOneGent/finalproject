@@ -1,9 +1,9 @@
 import React from "react";
 import { NewBookForm } from './NewBookForm'
-import {useHistory,Link}from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 
 export const BookShelf = (props) => {
-    const {data} = props;
+    const { data } = props;
     const { bookShelf, updateBookcase, deleteBookcase, lookupBookOpenLib, lookupOpenLibInfo } = props;
     console.log(props);
     const deleteBook = (bookId) => {
@@ -28,29 +28,29 @@ export const BookShelf = (props) => {
         console.log('What came back from openLib');
         console.log(OpenLibBook);
 
-        if(OpenLibBook){
+        if (OpenLibBook) {
 
-        // block below deprecated due to inconsistent data results
+            // block below deprecated due to inconsistent data results
 
-        /* 
-        const OpenLibBookInfo = await lookupOpenLibInfo(OpenLibBook.docs[0].key);
-        console.log("OpenLibBookInfo return results");
-        console.log(OpenLibBookInfo);
-        
-        book = { ...book, OLworks: OpenLibBook.docs[0].key, cover: OpenLibBookInfo.covers, synop: OpenLibBookInfo.description}; */
+            /* 
+            const OpenLibBookInfo = await lookupOpenLibInfo(OpenLibBook.docs[0].key);
+            console.log("OpenLibBookInfo return results");
+            console.log(OpenLibBookInfo);
+            
+            book = { ...book, OLworks: OpenLibBook.docs[0].key, cover: OpenLibBookInfo.covers, synop: OpenLibBookInfo.description}; */
 
-        book = {...book, OLworks: OpenLibBook.docs[0].key, cover: `https://covers.openlibrary.org/b/id/${OpenLibBook.docs[0].cover_i}-M.jpg`  };
-        
+            book = { ...book, OLworks: OpenLibBook.docs[0].key, cover: `https://covers.openlibrary.org/b/id/${OpenLibBook.docs[0].cover_i}-M.jpg` };
 
-        } else{
+
+        } else {
             // add place holder cover image and synopsis text into book variable
             book = { ...book, OLworks: '', cover: '/imgs/coverdefault.jpg' };
         }
 
         // test to add multiple covers... will expand later
         // book = { ...book, OLworks: OpenLibBook.docs[0].key, cover: [OpenLibBook.docs[0].cover_i, OpenLibBook.docs[1].cover_i, OpenLibBook.docs[2].cover_i,] };
-        
-       // book = { ...book, OLworks: OpenLibBook.docs[0].key, cover: OpenLibBook.docs[0].cover_i };
+
+        // book = { ...book, OLworks: OpenLibBook.docs[0].key, cover: OpenLibBook.docs[0].cover_i };
 
 
         return updateBookcase({ ...bookShelf, books: [...bookShelf.books, book] })
@@ -101,68 +101,76 @@ export const BookShelf = (props) => {
         )
     }
 
+
+
     const books = () => (
 
 
-        <table className="bookshelf-table">
+        <div className="bookshelf-div container-fluid">
             {console.log("bookshelf below")}
             {console.log(bookShelf)}
             {console.log(data)}
-            <tbody>
-            {bookShelf.books.map((book, index) => (
-                
-                <tr key={index}>
-                    <td>
-                        
-                    <div><img src={`${book.cover}`} 
-                    
-/*                     onError={({ currentTarget }) => {
-    currentTarget.onerror = null; // prevents looping
-    currentTarget.src="/imgs/coverdefault.jpg";
-  }} */
-  
-  
-  /></div>
+            <div className="row bookshelf-row">
+                {bookShelf.books.map((book, index) => (
+
+                    <div className="col single-book-col" key={index}>
+                        <div className="row "> 
+                        <div className="row img-Col">
+
+                            <div><img src={`${book.cover}`}
+
+                            /*                     onError={({ currentTarget }) => {
+                                currentTarget.onerror = null; // prevents looping
+                                currentTarget.src="/imgs/coverdefault.jpg";
+                              }} */
 
 
-                    {/* <div><img src={`https://covers.openlibrary.org/b/id/${book.cover}-M.jpg`} onError={src='http://server/app/resources/img/avatar.jpg'}/></div> */}
+                            /></div>
 
 
-                    {/* <div>(Image from OpenLibrary)</div>  */}
-                    </td>
-                    <table><tbody><tr>
-                    <td>
-                        <label><strong> Title: </strong> {`${book.title}`} &nbsp;&nbsp;&nbsp;  <strong> Author: </strong> {`${book.author}`}</label> 
-                        
-                    </td>
-                    </tr>
-                    {/* <tr> <strong> Synopsis (from open Library) - </strong> TEST TEXT</tr> */}
-                    </tbody></table>
-                    <td>
-                        <button onClick={(e) => deleteBook(book.id)}>Delete</button>
-                    </td>
-                    {console.log('li hit')}
-                    {console.log(book.title)}
-                </tr>
+                            {/* <div><img src={`https://covers.openlibrary.org/b/id/${book.cover}-M.jpg`} onError={src='http://server/app/resources/img/avatar.jpg'}/></div> */}
 
-            ))}
-</tbody>
-        </table>
+
+                            {/* <div>(Image from OpenLibrary)</div>  */}
+                        </div>
+                        <div className="row">
+                            <div>
+                                <strong> Title: </strong> {`${book.title}`} 
+                            </div>
+                            <div>
+                                <strong> Author: </strong> {`${book.author}`}
+                              </div>
+                            
+                            {/* <tr> <strong> Synopsis (from open Library) - </strong> TEST TEXT</tr> */}
+                        </div>
+                        </div>
+                        <div className="row">
+                        <div className="col">
+                            <button onClick={(e) => deleteBook(book.id)}>Delete</button>
+                        </div>
+                        </div>
+                        {console.log('li hit')}
+                        {console.log(book.title)}
+                    </div>
+
+                ))}
+            </div>
+        </div>
 
     );
 
-/*     const RedirectEntry =() => {
-        const history = useHistory();
-        history.push("/Bookshelf");
+    /*     const RedirectEntry =() => {
+            const history = useHistory();
+            history.push("/Bookshelf");
+    
+            return
+        }; */
 
-        return
-    }; */
 
+    return props.bookShelf === undefined ? <h2>Bookshelf Failed to Load, Try Again</h2> : (
 
-    return  props.bookShelf === undefined ? <h2>Bookshelf Failed to Load, Try Again</h2> : (
-
-        <div className='card border-color-secondary'>
-            <h1 className="card-header bg-success">{bookShelf.Bookcase}</h1>
+        <div className='card border-color-secondary g-0'>
+            <h1 className="card-header bg-secondary g-0">{bookShelf.Bookcase}</h1>
             {/* <h2>{bookShelf.id}</h2>*/}
             <div className="card-body">
                 {
@@ -172,7 +180,9 @@ export const BookShelf = (props) => {
             <NewBookForm addNewBook={addNewBook} />
             {//delete book case goes here
             }
-            <button onClick={(e) => deleteShelf(bookShelf)}>Delete Bookshelf</button>
+            <div className="card-footer">
+            <button className='btn btn-danger' style={{width:'100%'}} onClick={(e) => deleteShelf(bookShelf)}>Delete Bookshelf</button>
+            </div>
         </div>
     );
 };

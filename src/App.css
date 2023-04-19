@@ -1,24 +1,75 @@
 body{
-   color: navy;
+  background-color: lightgray;
 }
 
 
 /* BookShelf css */
 
-.bookshelf-table {
+.bookshelf-div {
    width:100%;
  }
  
- .bookshelf-table tr{
+ .bookshelf-div tr{
    border-bottom: #282c34;
  }
 
- .shelflink-div{
+ .shelflink-div {
 
   font-size: 1.5em;
   font-weight: bold;
   color: black;
   font-style: normal;
+  background-image: url("../public/imgs/shelf.png");
+  height: 120px;
+  background-size: cover;
   
+  display: flex;
+
+  text-shadow: 0 0 5px white,
+  0 0 25px white,
+  0 0 50px white,
+  0 0 100px white;
+ 
+  
+  
+  
+ }
+
+ .shelflist-row {
+
+  justify-content:center;
+  
+ }
+
+ .linkItems {
+  text-decoration: none;
+ }
+
+ .headerDiv{
+
+  background-image: url("../public/imgs/banner.jpg");
+  background-size: cover;
+  padding: 10px;
+  
+ }
+ .navWrapper{
+  
+ }
+
+ .headerDiv h1{
+  text-shadow: 0 0 5px white,
+  0 0 25px white,
+  0 0 50px white,
+  0 0 100px white,
+  0 0 150px white;
+  
+ }
+
+ .headerDiv h2{
+  text-shadow: 0 0 5px white,
+  0 0 25px white,
+  0 0 50px white,
+  0 0 100px white,
+  0 0 150px white;
   
  }

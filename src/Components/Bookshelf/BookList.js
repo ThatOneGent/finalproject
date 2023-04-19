@@ -85,18 +85,22 @@ export const BookcaseList = () => {
 
     return (
         <div className="container">
-            <div className='row'>
-                <div className='col-md'>
+            
+                <div className='row'>
                     <div className='conatiner' id='shelflist' >
 
                         <div className='row shelflist-row' >
 
                             {state.shelves.map((bookShelf, index) => (
-                                <div className='col-md-6 shelflist-item' key={index} >
-                                    <Link to={`${match.url}/${bookShelf.id}`} >
+                                <div className='col-md-3 shelflist-item' key={index} >
+                                    <Link to={`${match.url}/${bookShelf.id}`} className='linkItems align-middle'>
                                     
-                                        <div className='text-center shelflink-div' style={{backgroundImage:"url(/imgs/shelf.jpg)", height:'120px',backgroundSize:'cover'}}>
-                                            {bookShelf.Bookcase} <br/> {bookShelf.books.length} Books</div>
+                                        <div className='shelflink-div align-items-center justify-content-center' >
+                                            <span>{bookShelf.Bookcase} 
+                                            <br/>
+                                            {bookShelf.books.length} Books</span>
+                                            
+                                            </div>
                                     </Link> 
                                 </div>
 
@@ -106,10 +110,10 @@ export const BookcaseList = () => {
 
                    
                 </div>
-                <div className='col-md'>
+                <div className='row'>
                     <NewShelfForm addBookcase={addBookcase} />
                 </div>
-            </div>
+            
             <div className='row'>
 
             <Switch>
