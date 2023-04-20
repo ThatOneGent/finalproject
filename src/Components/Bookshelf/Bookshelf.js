@@ -1,36 +1,56 @@
 import React from "react";
 import { NewBookForm } from './NewBookForm'
-import { useHistory, Link } from 'react-router-dom'
+
+//Componenet displays individual bookshelf, all books with in said bookshelf, and calls on components allowing for adding a new book
+//also allows for deleting of individual books OR the entire shelf
+
 
 export const BookShelf = (props) => {
+
+    //prime props/components and output test results
     const { data } = props;
     const { bookShelf, updateBookcase, deleteBookcase, lookupBookOpenLib, lookupOpenLibInfo } = props;
     console.log(props);
+
+//function for deleting individual book
+
     const deleteBook = (bookId) => {
+        //set updated bookshelf that will be passed in
+        
         const updatedShelf = {
             ...bookShelf,
-            books: bookShelf.books.filter((x) => x.id !== bookId)
+            books: bookShelf.books.filter((x) => x.id !== bookId) //filter out the book to be deleted
         };
+
+        //console log for testing
         console.log('deletedBook');
         console.log(updatedShelf);
-        updateBookcase(updatedShelf);
+    
+        updateBookcase(updatedShelf); //Call function to update the bookcase from BookList.js
     };
 
+//function for adding individual book
     const addNewBook = async (book) => {
-        let newID = Math.floor(1000 + Math.random() * 9000);
-        book = { ...book, id: newID };
-        console.log("Openlib api test");
-        //console.log(lookupBooktest(book));  //always gives promise pending
-        const OpenLibBook = await lookupBookOpenLib(book);
+        let newID = Math.floor(1000 + Math.random() * 9000); //mockApi does not create an id for individual books - this sets a random four digit ID# for each book... this pay cause an issue if a book has a repeat ID, but slim chances 
+        book = { ...book, id: newID }; //new book (title/author) has newID added on
+   
+        
+        const OpenLibBook = await lookupBookOpenLib(book); //calling OpenLib book lookup using book data just submitted
+        
+        const resultsTest = OpenLibBook.docs[0].cover_i;
+        console.log("results test output")
+        console.log(resultsTest);
+        //Console log for testing
 
         //const resp = await lookupBooktest(book);
         //const TestResults = await OpenLibBook.json();
         console.log('What came back from openLib');
         console.log(OpenLibBook);
 
-        if (OpenLibBook) {
+        if (OpenLibBook) {  //IF the data returns from OpenLib... 
 
-            // block below deprecated due to inconsistent data results
+
+            // block below deprecated due to inconsistent data results from OpenLib API
 
             /* 
             const OpenLibBookInfo = await lookupOpenLibInfo(OpenLibBook.docs[0].key);
@@ -39,28 +59,42 @@ export const BookShelf = (props) => {
             
             book = { ...book, OLworks: OpenLibBook.docs[0].key, cover: OpenLibBookInfo.covers, synop: OpenLibBookInfo.description}; */
 
-            book = { ...book, OLworks: OpenLibBook.docs[0].key, cover: `https://covers.openlibrary.org/b/id/${OpenLibBook.docs[0].cover_i}-M.jpg` };
+            if(resultsTest==null){
+                book = { ...book, OLworks: OpenLibBook.docs[0].key, cover: `https://covers.openlibrary.org/b/id/${OpenLibBook.docs[0].cover_i}-M.jpg` };
+            } else {
+                
+                book = { ...book, OLworks: '', cover: '/imgs/coverdefault.jpg' };
+            }
+
+
+            book = { ...book, OLworks: OpenLibBook.docs[0].key, cover: `https://covers.openlibrary.org/b/id/${OpenLibBook.docs[0].cover_i}-M.jpg` }; // if open library returns data, add the OpenLib works Key, and the cover information to book
+            //Using URL versus just the cover results only. This is due to the default cover being used as well
 
 
         } else {
+            //IF no results are returned or an error occurs on the OpenLib api
             // add place holder cover image and synopsis text into book variable
             book = { ...book, OLworks: '', cover: '/imgs/coverdefault.jpg' };
         }
 
+
         // test to add multiple covers... will expand later
         // book = { ...book, OLworks: OpenLibBook.docs[0].key, cover: [OpenLibBook.docs[0].cover_i, OpenLibBook.docs[1].cover_i, OpenLibBook.docs[2].cover_i,] };
-
         // book = { ...book, OLworks: OpenLibBook.docs[0].key, cover: OpenLibBook.docs[0].cover_i };
 
 
-        return updateBookcase({ ...bookShelf, books: [...bookShelf.books, book] })
+        return updateBookcase({ ...bookShelf, books: [...bookShelf.books, book] }) //return is the updatedBookcase being passed new book that was just added
     };
 
+//function to delete entire shelf -- used by button
     const deleteShelf = (shelf) => {
 
-        deleteBookcase(shelf);
+        deleteBookcase(shelf); // calls the deleteBookcase from BookList.js
     };
 
+    // This is deprecated code as the multiple covers part doesnt work due to bad data - may revisit later
+
+    /* 
     function CarouselBuild() {
 
         return (
@@ -100,8 +134,10 @@ export const BookShelf = (props) => {
 
         )
     }
+ */
 
-
+//function that builds the book portion of the return export
+//some left over commented code for deprecated functions- may reimplement or revise later
 
     const books = () => (
 
@@ -159,19 +195,17 @@ export const BookShelf = (props) => {
 
     );
 
-    /*     const RedirectEntry =() => {
-            const history = useHistory();
-            history.push("/Bookshelf");
-    
-            return
-        }; */
 
 
-    return props.bookShelf === undefined ? <h2>Bookshelf Failed to Load, Try Again</h2> : (
+//if the props are blank or there is an error, display error, other wise return results
+// this extra piece keeps portion of the above code from running, or throwing an error before data has time to flow back down
+// no error message means it will alway try and load, and possibly cause fatal error
+
+    return props.bookShelf === undefined ? <h2>Bookshelf Failed to Load, Try Again</h2> : ( 
 
         <div className='card border-color-secondary g-0'>
             <h1 className="card-header bg-secondary g-0">{bookShelf.Bookcase}</h1>
-            {/* <h2>{bookShelf.id}</h2>*/}
+            
             <div className="card-body">
                 {
                     books({ books, shelfId: bookShelf.id, deleteBook })
@@ -187,22 +221,3 @@ export const BookShelf = (props) => {
     );
 };
 
-
-/* 
-const books = () => (
-
-
-    <ul>
-        {bookShelf.books.map((book, index) => (
-            <li key={index}>
-                <label><strong> Title: </strong> {`${book.title}`} &nbsp;&nbsp;&nbsp;  <strong> Author: </strong> {`${book.author}`}</label>
-                <button onClick={(e) => deleteBook(book.id)}>Delete</button>
-                {console.log('li hit')}
-                {console.log(book.title)}
-            </li>
-
-        ))}
-
-    </ul>
-
-); */

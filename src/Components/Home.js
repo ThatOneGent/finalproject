@@ -1,6 +1,9 @@
 import React from "react";
 import {Link} from "react-router-dom"
 
+//Component for Home route
+// imports Link because a single link is used for the About page
+
 export default function Home()  {
 
      return ( 

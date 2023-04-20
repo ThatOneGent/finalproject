@@ -1,16 +1,20 @@
 import React from "react";
 import { useState } from "react";
 
+//Component contains the form used to add a new book
+
 export const NewBookForm = (props) => {
+    //set hooks for state changes
     const [title, setTitle] = useState('');
     const [author, setAuth] = useState(undefined);
 
   
+//on submit of new book function
 
     const onSubmit = (e) => {
         e.preventDefault();
         if (title && author) {
-            props.addNewBook({ title, author });
+            props.addNewBook({ title, author }); //calls the addNewBook function in bookshelf.js
             setTitle('');
             setAuth('');
         } else {
@@ -18,6 +22,7 @@ export const NewBookForm = (props) => {
         }
     };
 
+    //returns the form to submit title and author for adding a book
     return (
         <div className="container ">
             <h4>Add a new book</h4>

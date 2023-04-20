@@ -1,6 +1,12 @@
 const OpenLibURL = 'https://openlibrary.org';
 
+//API file to interact with the Open Library API
+//Only used to pull in extra data
+
 class OpenLibApi {
+
+
+    //method used to find / search for a book based on it's title
 
     OLfind = async (book) => {
 
@@ -8,32 +14,38 @@ class OpenLibApi {
             const resp = await fetch(`${OpenLibURL}/search.json?title=${book.title}`);
             const data = await resp.json();
 
+            //console log for testing that it worked
             console.log("OLfind api called - Data and Data.doc[0] below")
             console.log(data);
             console.log(data.docs[0].key);
+
             return data;
 
-        } catch(e) {
+        } catch (e) {
             console.log('Opps, looks like Open Lib Search faild', e);
         }
 
     }
 
-OLInfoFind = async (works) => {
+    //method used to locate MORE information based on the works key found in previous method
+    //this is no longer used as the data is inconsistent from book to book.
+    OLInfoFind = async (works) => {
 
-    try {
-        const resp = await fetch(`${OpenLibURL}${works}.json`);
-        const data = await resp.json();
-        console.log("OLInfoFind called = data below")
-        console.log(data);
-   
-        return data;
+        try {
+            const resp = await fetch(`${OpenLibURL}${works}.json`);
+            const data = await resp.json();
+            
+            //console log for testing
+            console.log("OLInfoFind called = data below")
+            console.log(data);
 
-    } catch(e) {
-        console.log('Opps, looks like Open Lib Info Find faild', e);
+            return data;
+
+        } catch (e) {
+            console.log('Opps, looks like Open Lib Info Find faild', e);
+        }
+
     }
-
-}
 
 }
 

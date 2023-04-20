@@ -9,50 +9,29 @@ import './App.css';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link,
-  useRouteMatch
+  Route 
 } from 'react-router-dom';
 
 import Home from './Components/Home.js';
 import About from './Components/About.js';
 import BookcaseList from './Components/Bookshelf/BookList';
-import NavMenu from './Components/NavMenu';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
 
+
+//Main app component
 export default function App() {
 
   return (
     <div className='container-fluid g-0' > {/* Sets stage for using entire top portion for header and set gutter to 0*/}
+
        <Router> 
-        <Header />
+        <Header /> {/* call the header component */}
        
         <div className='container'>  {/* Contains main body of app within container-- includes the switch component that is the route/navigation */}
         
-         
-          {/*  <div className='btn-group'>
+         {/* switch located here versus NavMenu */}
 
-            <button className=' btn btn-outline-secondary'>
-              <Link to="/">Home</Link>
-
-            </button>
-            <button className=' btn btn-outline-secondary'>
-
-              <Link to="/Bookshelf">Bookshelf</Link>
-            </button>
-
-            <button className=' btn btn-outline-secondary'>
-
-              <Link to="/About">About</Link>
-            </button>
-
-
-
-          </div> */}
-
-
-          
           <Switch>
             <Route path='/Bookshelf'>
               <BookcaseList/>
@@ -68,7 +47,7 @@ export default function App() {
 
 
         </div>
-        <Footer/>
+        <Footer/> {/* Call footer component */}
 
       </Router>
     </div>

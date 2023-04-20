@@ -1,5 +1,6 @@
 import React from "react";
 
+//Component for the About page route
 export default function About() {
 
         return (

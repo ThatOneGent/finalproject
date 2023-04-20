@@ -1,14 +1,18 @@
 import React from "react";
 import { useState } from "react";
 
-export const NewShelfForm = (props) => {
-    const [shelfName, setShelfName] = useState('');
+//Component to add an whole new bookshelf 
 
+export const NewShelfForm = (props) => {
+
+    const [shelfName, setShelfName] = useState(''); //set hooks
+
+//onsubmit function to add shelf
     const addShelfSub = (e) => {
         e.preventDefault();
         if (shelfName) {
 
-            props.addBookcase({ shelfName });
+            props.addBookcase({ shelfName }); //calls the addBookcase function in Booklist.js
             setShelfName('');
         } else {
             console.log('invalid input');
@@ -16,6 +20,8 @@ export const NewShelfForm = (props) => {
 
     };
 
+
+    //returns form to add a new shelf using only a name.
     return (
         
             <div className="container-fluid g-0 p-2 text-center">

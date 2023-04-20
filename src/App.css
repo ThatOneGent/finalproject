@@ -15,24 +15,24 @@ body{
    border-bottom: #282c34;
  }
 
+  /* CSS for the individual Shelves */
  .shelflink-div {
 
   font-size: 1.5em;
   font-weight: bold;
   color: black;
   font-style: normal;
-  background-image: url("../public/imgs/shelf.png");
+  background-image: url("../public/imgs/shelf.png"); /* Sets background image to set of books */
   height: 120px;
   background-size: cover;
   
   display: flex;
-
+    
+    /* Gives shadow for easier reading */
   text-shadow: 0 0 5px white,
   0 0 25px white,
   0 0 50px white,
   0 0 100px white;
- 
-  
   
   
  }
@@ -47,6 +47,8 @@ body{
   text-decoration: none;
  }
 
+ /* CSS for Header portion */
+
  .headerDiv{
 
   background-image: url("../public/imgs/banner.jpg");
@@ -54,9 +56,7 @@ body{
   padding: 10px;
   
  }
- .navWrapper{
-  
- }
+ 
 
  .headerDiv h1{
   text-shadow: 0 0 5px white,
@@ -76,7 +76,7 @@ body{
   
  }
 
-
+/* CSS for Footer*/
  #mainFooter{
   
   
