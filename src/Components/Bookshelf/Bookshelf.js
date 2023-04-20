@@ -10,7 +10,8 @@ export const BookShelf = (props) => {
     //prime props/components and output test results
     const { data } = props;
     const { bookShelf, updateBookcase, deleteBookcase, lookupBookOpenLib, lookupOpenLibInfo } = props;
-    console.log(props);
+  
+   // console.log(props);
 
 //function for deleting individual book
 
@@ -23,8 +24,8 @@ export const BookShelf = (props) => {
         };
 
         //console log for testing
-        console.log('deletedBook');
-        console.log(updatedShelf);
+       // console.log('deletedBook');
+       // console.log(updatedShelf);
     
         updateBookcase(updatedShelf); //Call function to update the bookcase from BookList.js
     };
@@ -37,15 +38,21 @@ export const BookShelf = (props) => {
         
         const OpenLibBook = await lookupBookOpenLib(book); //calling OpenLib book lookup using book data just submitted
         
-        const resultsTest = OpenLibBook.docs[0].cover_i;
-        console.log("results test output")
-        console.log(resultsTest);
+        const resultsTest = OpenLibBook.docs[0]; //set the results test to first doc in returned results so hasOwnPropety compare works
+        
+        //console.log("results test output")
+       // console.log(resultsTest);
+
         //Console log for testing
 
         //const resp = await lookupBooktest(book);
         //const TestResults = await OpenLibBook.json();
-        console.log('What came back from openLib');
-        console.log(OpenLibBook);
+
+        //console.log('What came back from openLib');
+        //console.log(OpenLibBook);
+        //console.log("Does cover exist??");
+        //console.log(resultsTest.hasOwnProperty('cover_i'));
+
 
         if (OpenLibBook) {  //IF the data returns from OpenLib... 
 
@@ -59,16 +66,20 @@ export const BookShelf = (props) => {
             
             book = { ...book, OLworks: OpenLibBook.docs[0].key, cover: OpenLibBookInfo.covers, synop: OpenLibBookInfo.description}; */
 
-            if(resultsTest==null){
+            if(resultsTest.hasOwnProperty('cover_i')){   // check to see if the returned results contain the cover_i property
+                
+                // if open library returns data AND there is a cover.... add the OpenLib works Key, and the cover information to book
                 book = { ...book, OLworks: OpenLibBook.docs[0].key, cover: `https://covers.openlibrary.org/b/id/${OpenLibBook.docs[0].cover_i}-M.jpg` };
             } else {
                 
+                // if the cover property does not exist, BUT data was returned.... insert stock data for image
                 book = { ...book, OLworks: '', cover: '/imgs/coverdefault.jpg' };
             }
 
-
-            book = { ...book, OLworks: OpenLibBook.docs[0].key, cover: `https://covers.openlibrary.org/b/id/${OpenLibBook.docs[0].cover_i}-M.jpg` }; // if open library returns data, add the OpenLib works Key, and the cover information to book
+            
+            
             //Using URL versus just the cover results only. This is due to the default cover being used as well
+
 
 
         } else {
@@ -143,9 +154,12 @@ export const BookShelf = (props) => {
 
 
         <div className="bookshelf-div container-fluid">
-            {console.log("bookshelf below")}
+
+        {/* Console logs for testing */}
+   {/*          {console.log("bookshelf below")}
             {console.log(bookShelf)}
             {console.log(data)}
+             */}
             <div className="row bookshelf-row">
                 {bookShelf.books.map((book, index) => (
 
@@ -185,8 +199,12 @@ export const BookShelf = (props) => {
                             <button onClick={(e) => deleteBook(book.id)}>Delete</button>
                         </div>
                         </div>
-                        {console.log('li hit')}
-                        {console.log(book.title)}
+
+                        {/* Testing consoles */}
+
+                       {/*  {console.log('li hit')}
+                        {console.log(book.title)} */}
+
                     </div>
 
                 ))}

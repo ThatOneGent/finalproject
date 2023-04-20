@@ -6,7 +6,7 @@ import { useState } from "react";
 export const NewBookForm = (props) => {
     //set hooks for state changes
     const [title, setTitle] = useState('');
-    const [author, setAuth] = useState(undefined);
+    const [author, setAuth] = useState('');
 
   
 //on submit of new book function
@@ -18,6 +18,8 @@ export const NewBookForm = (props) => {
             setTitle('');
             setAuth('');
         } else {
+
+            alert("Invalid Input, please enter both Title and author");
             console.log('invalid input');
         }
     };

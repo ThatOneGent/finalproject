@@ -43,8 +43,9 @@ export const BookcaseList = () => {
         //testing console out
         console.log("this is shelving after fetch")
         console.log(shelving);
-        console.log("this is state");
-        console.log(state);
+        
+       // console.log("this is state");
+       // console.log(state);
     };
 
     // function to update bookshelf
