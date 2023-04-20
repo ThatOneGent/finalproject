@@ -3,7 +3,9 @@ import React from "react";
 
 export default function Footer() {
 
-    return (<div>
+    return (
+    
+    <div id="mainfooter">
 
         <svg xmlns="http://www.w3.org/2000/svg" style={{ display: 'none' }}>
             <symbol id="BookShelf" viewBox="0 0 64 64">
@@ -45,12 +47,12 @@ export default function Footer() {
                     <a href="/" className="mb-3 me-2 mb-md-0 text-decoration-none lh-1">
                         <svg className="bi" width="64" height="64"><use xlinkHref="#BookShelf"></use></svg>
                     </a>
-                    <span className="mb-3 mb-md-0">© 2022 Company, Inc</span>
+                    <span className="mb-3 mb-md-0">© 2023 ThatOneGent Creations</span>
                 </div>
 
                 <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
                    
-                    <li class="ms-3"><a class="text-muted" href="https://github.com/ThatOneGent/"><svg class="bi" width="64" height="64"><use xlinkHref="#Github"></use></svg></a></li>
+                    <li class="ms-3"><a class="text-muted" href="https://github.com/ThatOneGent/" target="_blank"><svg class="bi" width="64" height="64"><use xlinkHref="#Github"></use></svg></a></li>
                 </ul>
             </footer>
         </div>

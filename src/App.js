@@ -24,7 +24,7 @@ import Footer from './Components/Footer';
 export default function App() {
 
   return (
-    <div className='container-fluid g-0'> {/* Sets stage for using entire top portion for header and set gutter to 0*/}
+    <div className='container-fluid g-0' > {/* Sets stage for using entire top portion for header and set gutter to 0*/}
        <Router> 
         <Header />
        
